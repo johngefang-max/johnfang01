@@ -1,238 +1,322 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JohnFang - Monster Survivors Online Game | Play Free Now</title>
-    <meta name="description" content="Play JohnFang Monster Survivors online game for free. Experience thrilling survival gameplay with stunning graphics and challenging levels.">
-    <meta name="keywords" content="johnfang, monster survivors, online game, free game, survival game, browser game">
-    <link rel="canonical" href="https://johnfang.blog/">
-    <meta property="og:title" content="JohnFang - Monster Survivors Online Game">
-    <meta property="og:description" content="Play JohnFang Monster Survivors online game for free. Experience thrilling survival gameplay.">
-    <meta property="og:url" content="https://johnfang.blog/">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="JohnFang - Monster Survivors Online Game">
-    <meta name="twitter:description" content="Play JohnFang Monster Survivors online game for free.">
+    <title>去水印下载工具</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'apple-blue': '#007AFF',
-                        'apple-green': '#34C759',
-                        'apple-indigo': '#5856D6',
-                        'apple-orange': '#FF9500',
-                        'apple-pink': '#FF2D92',
-                        'apple-purple': '#AF52DE',
-                        'apple-red': '#FF3B30',
-                        'apple-teal': '#5AC8FA',
-                        'apple-yellow': '#FFCC00',
-                        'apple-gray': '#8E8E93',
-                        'apple-gray2': '#AEAEB2',
-                        'apple-gray3': '#C7C7CC',
-                        'apple-gray4': '#D1D1D6',
-                        'apple-gray5': '#E5E5EA',
-                        'apple-gray6': '#F2F2F7'
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        .game-container {
-            aspect-ratio: 16/9;
-            max-height: 70vh;
-        }
-        
         .gradient-bg {
-            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        
         .card-shadow {
-            box-shadow: 0 10px 25px -5px rgba(0, 122, 255, 0.1), 0 10px 10px -5px rgba(0, 122, 255, 0.04);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
-        @media (max-width: 768px) {
-            .game-container {
-                max-height: 50vh;
-            }
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="bg-apple-gray6 text-gray-900">
-    <!-- Header -->
-    <header class="gradient-bg text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">JohnFang</h1>
-                <p class="text-xl md:text-2xl opacity-90">Experience the ultimate monster survival adventure in your browser</p>
+<body class="bg-gray-100 min-h-screen">
+    <!-- 密码验证界面 -->
+    <div id="passwordModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 card-shadow">
+            <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">访问验证</h2>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">请输入访问密码：</label>
+                <input type="password" id="passwordInput" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="请输入密码">
             </div>
+            <button onclick="verifyPassword()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
+                确认
+            </button>
+            <div id="passwordError" class="text-red-500 text-sm mt-2 hidden">密码错误，请重试</div>
         </div>
-    </header>
+    </div>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
-        <!-- Game Section -->
-        <section class="mb-12">
-            <div class="bg-white rounded-2xl card-shadow overflow-hidden">
-                <div class="p-6 md:p-8">
-                    <h2 class="text-2xl md:text-3xl font-bold text-apple-blue mb-4">Play Monster Survivors Now</h2>
-                    <p class="text-gray-600 mb-6">Jump into the action-packed world of Monster Survivors and test your survival skills against waves of challenging enemies.</p>
-                    
-                    <div class="game-container w-full bg-gray-100 rounded-xl overflow-hidden">
-                        <iframe 
-                            src="https://cloud.onlinegames.io/games/2025/unity/monster-survivors/index-og.html" 
-                            class="w-full h-full border-0"
-                            allowfullscreen
-                            loading="lazy"
-                            title="JohnFang Monster Survivors Game">
-                        </iframe>
-                    </div>
-                </div>
+    <!-- 主界面 -->
+    <div id="mainContent" class="hidden">
+        <!-- 头部 -->
+        <header class="gradient-bg text-white py-6">
+            <div class="container mx-auto px-4">
+                <h1 class="text-3xl font-bold text-center">去水印下载工具</h1>
+                <p class="text-center mt-2 opacity-90">支持抖音、快手等平台视频去水印下载</p>
             </div>
-        </section>
+        </header>
 
-        <!-- Game Description -->
-        <section class="mb-12">
-            <div class="bg-white rounded-2xl card-shadow p-6 md:p-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-apple-indigo mb-6">About Monster Survivors</h2>
-                
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-semibold text-apple-blue mb-3">Game Overview</h3>
-                        <p class="text-gray-700 mb-4">
-                            Monster Survivors is an intense survival game where players must navigate through dangerous territories filled with hostile creatures. Your mission is to survive as long as possible while collecting resources, upgrading your abilities, and defeating increasingly powerful monsters.
-                        </p>
-                        <p class="text-gray-700">
-                            The game features dynamic gameplay mechanics, stunning visual effects, and progressively challenging levels that will test your strategic thinking and quick reflexes.
-                        </p>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-xl font-semibold text-apple-green mb-3">Key Features</h3>
-                        <ul class="space-y-2 text-gray-700">
-                            <li class="flex items-center">
-                                <span class="w-2 h-2 bg-apple-green rounded-full mr-3"></span>
-                                Real-time survival gameplay
-                            </li>
-                            <li class="flex items-center">
-                                <span class="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
-                                Progressive difficulty system
-                            </li>
-                            <li class="flex items-center">
-                                <span class="w-2 h-2 bg-apple-purple rounded-full mr-3"></span>
-                                Character upgrades and abilities
-                            </li>
-                            <li class="flex items-center">
-                                <span class="w-2 h-2 bg-apple-orange rounded-full mr-3"></span>
-                                Stunning graphics and effects
-                            </li>
-                            <li class="flex items-center">
-                                <span class="w-2 h-2 bg-apple-red rounded-full mr-3"></span>
-                                No download required - play instantly
-                            </li>
-                        </ul>
-                    </div>
+        <!-- 主要内容 -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- 输入区域 -->
+            <div class="bg-white rounded-lg card-shadow p-6 mb-8">
+                <h2 class="text-xl font-bold mb-4 text-gray-800">粘贴分享链接</h2>
+                <div class="mb-4">
+                    <textarea id="linkInput" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 resize-none" rows="4" placeholder="请粘贴包含分享链接的文本，例如：\n4.89 03/24 cNJ:/ K@W.md 随意"搭讪"韩国美女，印度富人区的三哥能有多自信？ # 外国人 # 歪果仁真会玩 # 印度 # 旅行 # 看世界  https://v.douyin.com/ZOqdo9qsYuY/  复制此链接，打开Dou音搜索，直接观看视频！"></textarea>
                 </div>
+                <button onclick="parseLink()" id="parseBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center">
+                    <span id="parseText">开始解析</span>
+                    <div id="loadingIcon" class="ml-2 w-4 h-4 border-2 border-white border-t-transparent rounded-full loading hidden"></div>
+                </button>
             </div>
-        </section>
 
-        <!-- How to Play -->
-        <section class="mb-12">
-            <div class="bg-white rounded-2xl card-shadow p-6 md:p-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-apple-purple mb-6">How to Play</h2>
-                
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-apple-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl font-bold">1</span>
+            <!-- 结果展示区域 -->
+            <div id="resultArea" class="hidden">
+                <div class="bg-white rounded-lg card-shadow p-6 fade-in">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800">解析结果</h2>
+                    
+                    <!-- 视频信息 -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-700">视频标题</h3>
+                        <p id="videoTitle" class="text-gray-600 bg-gray-50 p-3 rounded-lg"></p>
+                    </div>
+
+                    <!-- 封面预览 -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-700">封面预览</h3>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="flex-1">
+                                <img id="coverImage" class="w-full max-w-md rounded-lg shadow-md" alt="视频封面">
+                            </div>
+                            <div class="flex-1">
+                                <button onclick="downloadCover()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200 mb-2 w-full md:w-auto">
+                                    下载封面
+                                </button>
+                            </div>
                         </div>
-                        <h3 class="text-lg font-semibold mb-2">Start Your Journey</h3>
-                        <p class="text-gray-600">Click the play button above to begin your survival adventure in the monster-filled world.</p>
                     </div>
-                    
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-apple-green rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl font-bold">2</span>
+
+                    <!-- 视频下载 -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-700">视频下载</h3>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="flex-1">
+                                <p class="text-gray-600 mb-2">视频已解析完成，点击下载按钮保存到本地</p>
+                                <div class="text-sm text-gray-500">
+                                    <span>文件类型：MP4</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <button onclick="downloadVideo()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200 w-full md:w-auto">
+                                    下载视频
+                                </button>
+                            </div>
                         </div>
-                        <h3 class="text-lg font-semibold mb-2">Survive & Collect</h3>
-                        <p class="text-gray-600">Use keyboard controls to move, attack monsters, and collect valuable resources and power-ups.</p>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-apple-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl font-bold">3</span>
-                        </div>
-                        <h3 class="text-lg font-semibold mb-2">Upgrade & Conquer</h3>
-                        <p class="text-gray-600">Level up your character, unlock new abilities, and face increasingly challenging monster waves.</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Game Stats -->
-        <section class="mb-12">
-            <div class="bg-white rounded-2xl card-shadow p-6 md:p-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-apple-orange mb-6">Game Information</h2>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-apple-blue mb-2">Free</div>
-                        <div class="text-gray-600">Cost</div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-apple-green mb-2">Browser</div>
-                        <div class="text-gray-600">Platform</div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-apple-purple mb-2">Unity</div>
-                        <div class="text-gray-600">Engine</div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-apple-orange mb-2">Online</div>
-                        <div class="text-gray-600">Mode</div>
+            <!-- 错误提示 -->
+            <div id="errorArea" class="hidden">
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 fade-in">
+                    <div class="flex items-center">
+                        <div class="text-red-500 mr-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-red-800 font-semibold">解析失败</h3>
+                            <p id="errorMessage" class="text-red-600 mt-1"></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </main>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-xl font-semibold mb-4">Ready to Start Your Adventure?</h2>
-            <p class="text-gray-400 mb-4">Join thousands of players in the ultimate monster survival experience</p>
-            <p class="text-gray-500 text-sm">
-                © 2024 JohnFang.blog - All rights reserved | 
-                <a href="#" class="text-apple-blue hover:text-apple-teal transition-colors">Privacy Policy</a> | 
-                <a href="#" class="text-apple-blue hover:text-apple-teal transition-colors">Terms of Service</a>
-            </p>
-        </div>
-    </footer>
+    <script>
+        let currentVideoData = null;
 
-    <!-- Schema.org structured data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "VideoGame",
-        "name": "JohnFang Monster Survivors",
-        "description": "Experience the ultimate monster survival adventure in your browser. Play JohnFang Monster Survivors online game for free.",
-        "url": "https://johnfang.blog/",
-        "genre": "Survival Game",
-        "gamePlatform": "Web Browser",
-        "operatingSystem": "Any",
-        "applicationCategory": "Game",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
+        // 密码验证
+        function verifyPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const errorDiv = document.getElementById('passwordError');
+            
+            if (password === '123456') {
+                document.getElementById('passwordModal').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+                errorDiv.classList.add('hidden');
+            } else {
+                errorDiv.classList.remove('hidden');
+                document.getElementById('passwordInput').value = '';
+            }
         }
-    }
+
+        // 回车键验证密码
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+        });
+
+        // 提取链接的正则表达式
+        function extractUrl(text) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const matches = text.match(urlRegex);
+            return matches ? matches[0] : null;
+        }
+
+        // 解析链接
+        async function parseLink() {
+            const linkInput = document.getElementById('linkInput').value.trim();
+            const parseBtn = document.getElementById('parseBtn');
+            const parseText = document.getElementById('parseText');
+            const loadingIcon = document.getElementById('loadingIcon');
+            const resultArea = document.getElementById('resultArea');
+            const errorArea = document.getElementById('errorArea');
+
+            if (!linkInput) {
+                showError('请输入包含链接的文本');
+                return;
+            }
+
+            // 提取URL
+            const extractedUrl = extractUrl(linkInput);
+            if (!extractedUrl) {
+                showError('未找到有效的链接，请检查输入内容');
+                return;
+            }
+
+            // 显示加载状态
+            parseBtn.disabled = true;
+            parseText.textContent = '解析中...';
+            loadingIcon.classList.remove('hidden');
+            resultArea.classList.add('hidden');
+            errorArea.classList.add('hidden');
+
+            try {
+                // 检查是否为file://协议（本地文件）
+                if (window.location.protocol === 'file:') {
+                    // 本地文件模式，显示演示数据
+                    setTimeout(() => {
+                        const demoData = {
+                            title: '演示视频标题 - 随意"搭讪"韩国美女，印度富人区的三哥能有多自信？ #外国人 #歪果仁真会玩 #印度 #旅行 #看世界',
+                            cover: 'https://p26-sign.douyinpic.com/tos-cn-p-0015c000-ce/o8UTSAHbv4KjhggioEv4TFAeefM1ZwQH2sYeD7~tplv-dy-resize-walign-adapt-aq:720:q75.webp?lk3s=138a59ce&x-expires=1756515600&x-signature=%2FhPB1b95JwIWcplIBp%2BUI4E1yAw%3D&from=327834062&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=aweme_video&l=20250816093602CF8E8B9092420311F682',
+                            url: 'https://v9-default.365yg.com/2e3a0ce3b41372f7fe68bd18b4143c7e/689fef86/video/tos/cn/tos-cn-ve-15c000-ce/oIR085Eh9CfIXAL7fJRE1wVRdCBIgreuksvGIs/?a=2011&ch=0&cr=0&dr=0&cd=0%7C0%7C0%7C0&cv=1&br=3144&bt=3144&cs=0&ds=3&ft=aT_7TQQqUYqfJEZPo0OW_QYaUqiXXtqmRVJEjUJEpvPD-Ipz&mime_type=video_mp4&qs=0&rc=ZWRpaTU1ODM8M2ZlZDg6OEBpM3lqaHk5cjplNTMzbGkzNEAxMDJjMi4yXy4xMjIwLS0yYSNqZWhsMmRrby9hLS1kLWJzcw%3D%3D&btag=c0000e00030000&dy_q=1755308162&feature_id=fea919893f650a8c49286568590446ef&l=20250816093602F50CD29B5E9166D76423'
+                        };
+                        currentVideoData = demoData;
+                        displayResult(demoData);
+                        
+                        // 显示提示信息
+                        const notice = document.createElement('div');
+                        notice.className = 'bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4';
+                        notice.innerHTML = `
+                            <div class="flex items-center">
+                                <div class="text-yellow-500 mr-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-yellow-800 font-semibold">本地文件模式</h3>
+                                    <p class="text-yellow-700 mt-1 text-sm">当前为演示数据。要使用真实API，请通过HTTP服务器访问此页面。</p>
+                                </div>
+                            </div>
+                        `;
+                        document.getElementById('resultArea').insertBefore(notice, document.getElementById('resultArea').firstChild);
+                    }, 1500);
+                    return;
+                }
+
+                // 构建API请求URL
+                const apiUrl = `https://api.guijianpan.com/waterRemoveDetail/xxmQsyByAk?ak=25751750cb844f1282e1a66eeec69843&link=${encodeURIComponent(extractedUrl)}`;
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.code === '10000' && data.content && data.content.success) {
+                    currentVideoData = data.content;
+                    displayResult(data.content);
+                } else {
+                    showError(data.msg || '解析失败，请检查链接是否有效');
+                }
+            } catch (error) {
+                console.error('API请求失败:', error);
+                showError('网络请求失败，请检查网络连接或稍后重试。如果是CORS错误，请通过HTTP服务器访问此页面。');
+            } finally {
+                // 恢复按钮状态
+                parseBtn.disabled = false;
+                parseText.textContent = '开始解析';
+                loadingIcon.classList.add('hidden');
+            }
+        }
+
+        // 显示解析结果
+        function displayResult(content) {
+            document.getElementById('videoTitle').textContent = content.title || '无标题';
+            
+            const coverImage = document.getElementById('coverImage');
+            if (content.cover) {
+                coverImage.src = content.cover;
+                coverImage.onerror = function() {
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPuWbvueJh+WKoOi9veWksei0pTwvdGV4dD48L3N2Zz4=';
+                };
+            } else {
+                coverImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPuaXoOWwgemdojwvdGV4dD48L3N2Zz4=';
+            }
+
+            document.getElementById('resultArea').classList.remove('hidden');
+            document.getElementById('errorArea').classList.add('hidden');
+        }
+
+        // 显示错误信息
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorArea').classList.remove('hidden');
+            document.getElementById('resultArea').classList.add('hidden');
+        }
+
+        // 下载封面
+        function downloadCover() {
+            if (!currentVideoData || !currentVideoData.cover) {
+                alert('封面地址不可用');
+                return;
+            }
+            downloadFile(currentVideoData.cover, 'cover.jpg');
+        }
+
+        // 下载视频
+        function downloadVideo() {
+            if (!currentVideoData || !currentVideoData.url) {
+                alert('视频地址不可用');
+                return;
+            }
+            downloadFile(currentVideoData.url, 'video.mp4');
+        }
+
+        // 通用下载函数
+        function downloadFile(url, filename) {
+            try {
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('下载失败:', error);
+                // 如果直接下载失败，尝试在新窗口打开
+                window.open(url, '_blank');
+            }
+        }
+
+        // 回车键解析
+        document.getElementById('linkInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                parseLink();
+            }
+        });
     </script>
 </body>
 </html>
